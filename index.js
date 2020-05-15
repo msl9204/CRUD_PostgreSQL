@@ -2,7 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 
-const Sequelize = require("sequelize");
+const models = require("./models/index.js");
 
 const app = express();
 const port = 3000 || 3001;
@@ -14,20 +14,15 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Sequelize
-const sequelize = new Sequelize("express_post", "ms", "123456789", {
-    host: "localhost",
-    dialect: "postgres",
-});
-
 // Sequelize 접속 테스트
-sequelize
-    .authenticate()
+models.sequelize
+    .sync()
     .then(() => {
-        console.log("Connection has been established successfully.");
+        console.log(" DB 연결 성공");
     })
     .catch((err) => {
-        console.error("Unable to connect to the database:", err);
+        console.log("연결 실패");
+        console.log(err);
     });
 
 app.get("/", (req, res) => res.send("Hello World!"));
