@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Typography from "@material-ui/core/Typography";
+
 import Container from "@material-ui/core/Container";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
