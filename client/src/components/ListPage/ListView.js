@@ -39,7 +39,7 @@ export default function SimpleTable() {
     const [data, setdata] = useState("");
 
     useEffect(() => {
-        Axios.get("http://localhost:3000/crud/select").then((response) => {
+        Axios.get("http://118.222.73.34:5000/crud/select").then((response) => {
             setdata(response.data);
         });
     }, []);

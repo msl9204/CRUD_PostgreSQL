@@ -1,8 +1,10 @@
 const express = require("express");
+const cors = require("cors");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 
 const app = express();
+app.use(cors());
 // Port
 const port = 5000;
 

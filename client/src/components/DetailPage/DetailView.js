@@ -9,7 +9,7 @@ export default function SimpleContainer() {
     const [data, setdata] = useState("");
 
     useEffect(() => {
-        Axios.get(`http://localhost:3000/crud/detailView/${id}`).then(
+        Axios.get(`http://118.222.73.34:5000/crud/detailView/${id}`).then(
             (response) => {
                 setdata(response.data);
             }

@@ -36,7 +36,7 @@ export default function MultilineTextFields() {
     const [contents, setContents] = useState("");
 
     function handleSubmit(event) {
-        Axios.post("http://localhost:3000/crud/create", {
+        Axios.post("http://118.222.73.34:5000/crud/create", {
             user_id: userid,
             title: title,
             nickname: nickname,
