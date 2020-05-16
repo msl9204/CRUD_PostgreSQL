@@ -11,6 +11,7 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
     table: {
@@ -19,15 +20,17 @@ const useStyles = makeStyles({
 });
 
 function CreateButton() {
+    const history = useHistory();
+
     return (
         <Button
             variant="contained"
             color="primary"
             onClick={(event) => {
-                console.log("clicked!");
+                history.push("/write");
             }}
         >
-            Primary
+            Write
         </Button>
     );
 }

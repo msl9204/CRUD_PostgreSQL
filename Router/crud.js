@@ -26,6 +26,8 @@ router.get("/detailView/:id", (req, res) => {
 router.post("/create", (req, res) => {
     const body = req.body;
 
+    console.log(req.body);
+
     useDB
         .create({
             user_id: body.user_id,
@@ -34,10 +36,10 @@ router.post("/create", (req, res) => {
             title: body.title,
         })
         .then(() => {
-            res.send("데이터 생성 완료!");
+            res.send({ success: true });
         })
         .catch((err) => {
-            res.send("데이터 생성 실패!");
+            res.send(err);
         });
 });
 
