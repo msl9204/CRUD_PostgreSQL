@@ -15,15 +15,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Sequelize 접속 테스트
-models.sequelize
-    .sync()
-    .then(() => {
-        console.log(" DB 연결 성공");
-    })
-    .catch((err) => {
-        console.log("연결 실패");
-        console.log(err);
-    });
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
