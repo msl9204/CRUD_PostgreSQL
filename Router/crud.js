@@ -65,8 +65,17 @@ router.post("/update/:id", (req, res) => {
         });
 });
 
-router.post("/delete", (req, res) => {
-    res.send("delete!");
+router.post("/delete/:id", (req, res) => {
+    const id = req.params.id;
+
+    useDB
+        .destroy({ where: { id: id } })
+        .then(() => {
+            res.send({ success: true });
+        })
+        .catch((err) => {
+            res.send(err);
+        });
 });
 
 module.exports = router;

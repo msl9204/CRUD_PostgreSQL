@@ -36,6 +36,7 @@ export default function MultilineTextFields(props) {
     const [nickname, setNickname] = useState("");
     const [contents, setContents] = useState("");
 
+    // 수정하면 state에 받아옴
     useEffect(() => {
         if (props.user_id) {
             console.log(props.user_id);
@@ -108,6 +109,8 @@ export default function MultilineTextFields(props) {
         <Container>
             <form
                 autoComplete="off"
+                // props 에서 받은 것이 있다면 = 수정한다면, UpdateSubmit을 불러오고
+                // ListView에서 새로 작성하는 것이라면, CreateSubmit을 불러옴
                 onSubmit={(event) =>
                     props.user_id
                         ? handleUpdateSubmit(event)
@@ -159,6 +162,13 @@ export default function MultilineTextFields(props) {
                         type="submit"
                     >
                         쓰기
+                    </Button>
+                    <Button
+                        className="button"
+                        variant="contained"
+                        color="primary"
+                    >
+                        취소
                     </Button>
                 </StyledFormControl>
             </form>
