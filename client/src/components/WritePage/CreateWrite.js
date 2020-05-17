@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import { FormControl } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const StyledFormControl = styled(FormControl)`
     width: 40vw;
@@ -28,15 +28,47 @@ const StyledTextField = styled(TextField)`
     margin-top: 30px;
 `;
 
-export default function MultilineTextFields() {
+export default function MultilineTextFields(props) {
+    const { id } = useParams();
     const history = useHistory();
     const [userid, setUserid] = useState("");
     const [title, setTitle] = useState("");
     const [nickname, setNickname] = useState("");
     const [contents, setContents] = useState("");
 
-    function handleSubmit(event) {
+    useEffect(() => {
+        if (props.user_id) {
+            console.log(props.user_id);
+            setUserid(() => props.user_id);
+            setTitle(() => props.title);
+            setNickname(() => props.nickname);
+            setContents(() => props.contents);
+
+            console.log(userid);
+        }
+    }, [props]);
+
+    function handleCreateSubmit(event) {
         Axios.post("http://118.222.73.34:5000/crud/create", {
+            user_id: userid,
+            title: title,
+            nickname: nickname,
+            contents: contents,
+        })
+            .then((response) => {
+                console.log(response);
+                if (response.data.success) {
+                    history.push("/");
+                } else {
+                    alert("입력에 실패했습니다.");
+                }
+            })
+            .catch((err) => console.log(err));
+        event.preventDefault();
+    }
+
+    function handleUpdateSubmit(event) {
+        Axios.post(`http://118.222.73.34:5000/crud/update/${id}`, {
             user_id: userid,
             title: title,
             nickname: nickname,
@@ -74,7 +106,14 @@ export default function MultilineTextFields() {
 
     return (
         <Container>
-            <form autoComplete="off" onSubmit={(event) => handleSubmit(event)}>
+            <form
+                autoComplete="off"
+                onSubmit={(event) =>
+                    props.user_id
+                        ? handleUpdateSubmit(event)
+                        : handleCreateSubmit(event)
+                }
+            >
                 <StyledFormControl>
                     <StyledTextField
                         id="user-id"

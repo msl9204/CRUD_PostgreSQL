@@ -43,18 +43,26 @@ router.post("/create", (req, res) => {
         });
 });
 
-router.get("/update/:id", (req, res) => {
-    const user_id = req.params.id;
+router.post("/update/:id", (req, res) => {
+    const id = req.params.id;
     const body = req.body;
 
-    console.log(user_id);
-
-    res.send(`user id is ... ${user_id} `);
-
-    // useDB.update({
-    //     title: body.title,
-    //     contents: body.contents,
-    // }, {where : {조건}});
+    useDB
+        .update(
+            {
+                user_id: body.user_id,
+                nickname: body.nickname,
+                contents: body.contents,
+                title: body.title,
+            },
+            { where: { id: id } }
+        )
+        .then(() => {
+            res.send({ success: true });
+        })
+        .catch((err) => {
+            res.send(err);
+        });
 });
 
 router.post("/delete", (req, res) => {
