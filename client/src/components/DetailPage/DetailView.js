@@ -1,20 +1,42 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Container from "@material-ui/core/Container";
+import Card from "@material-ui/core/Card";
 import Axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import WritePage from "../WritePage/CreateWrite";
 
-const StyledContainer = styled(Container)``;
-
-const StyledDiv = styled.div`
-    background-color: grey;
+const StyledContainer = styled(Container)`
+    display: flex;
 `;
 
-const StyledDivContents = styled.div`
-    margin-top: 20%;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+const StyledContents = styled.div`
+    min-width: 900px;
+    min-height: 900px;
+    flex-direction: column;
+    margin: 5rem 0 0 0;
+    justify-self: center;
+    align-self: center;
+
+    .content-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    Button {
+        margin-top: 1rem;
+        max-width: 100px;
+    }
+`;
+
+const StyledCardContents = styled(Card)`
+    flex-grow: 1;
+    margin-top: 3%;
+
+    padding: 1.5rem;
+    min-width: 40%;
+    min-height: 500px;
 `;
 
 export default function SimpleContainer() {
@@ -32,6 +54,7 @@ export default function SimpleContainer() {
                 if (response.data.success) {
                     history.push("/");
                 } else {
+                    console.log(response);
                     alert("입력에 실패했습니다.");
                 }
             })
@@ -49,59 +72,60 @@ export default function SimpleContainer() {
 
     function RenderContents() {
         return (
-            <React.Fragment>
-                <div>
-                    <StyledDiv>id : {data[0].id}</StyledDiv>
-                    <div>user_id : {data[0].user_id}</div>
-                    <div>nickname : {data[0].nickname}</div>
-                    <div>title : {data[0].title}</div>
-                </div>
-                <StyledDivContents>
-                    contents : {data[0].contents}
-                </StyledDivContents>
-
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        setIsEdit(true);
-                    }}
-                >
-                    수정
-                </Button>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(event) => {
-                        DeletePost(event);
-                    }}
-                >
-                    삭제
-                </Button>
-            </React.Fragment>
+            <StyledContainer>
+                <StyledContents>
+                    <div>
+                        <div className="content-nickname">
+                            작성자 : {data[0].nickname}
+                        </div>
+                        <div className="content-title">{data[0].title}</div>
+                    </div>
+                    <StyledCardContents>{data[0].contents}</StyledCardContents>
+                    <div>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                setIsEdit(true);
+                            }}
+                        >
+                            수정
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(event) => {
+                                DeletePost(event);
+                            }}
+                        >
+                            삭제
+                        </Button>
+                    </div>
+                </StyledContents>
+            </StyledContainer>
         );
     }
 
     return (
         <React.Fragment>
-            <StyledContainer maxWidth="sm">
+            <div>
                 {/* 수정버튼을 누르면 수정Form을 랜더링하고, 아니라면 Contents를 보여줌 */}
                 {data[0] ? (
                     isEdit ? (
-                        <WritePage
-                            id={data[0].id}
-                            user_id={data[0].user_id}
-                            nickname={data[0].nickname}
-                            title={data[0].title}
-                            contents={data[0].contents}
-                        />
+                        <div>
+                            <WritePage
+                                id={data[0].id}
+                                user_id={data[0].user_id}
+                                nickname={data[0].nickname}
+                                title={data[0].title}
+                                contents={data[0].contents}
+                            />
+                        </div>
                     ) : (
                         <RenderContents />
                     )
-                ) : (
-                    "게시글을 불러올 수 없습니다!"
-                )}
-            </StyledContainer>
+                ) : null}
+            </div>
         </React.Fragment>
     );
 }

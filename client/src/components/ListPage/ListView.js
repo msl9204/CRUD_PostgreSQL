@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -13,12 +12,6 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-});
-
 function CreateButton() {
     const history = useHistory();
 
@@ -26,9 +19,10 @@ function CreateButton() {
         <Button
             variant="contained"
             color="primary"
-            onClick={(event) => {
+            onClick={() => {
                 history.push("/write");
             }}
+            style={{ marginTop: "2em" }}
         >
             Write
         </Button>
@@ -44,58 +38,69 @@ export default function SimpleTable() {
         });
     }, []);
 
-    const classes = useStyles();
-
     return (
-        <Container>
-            <TableContainer component={Paper}>
-                <Table
-                    component="div"
-                    className={classes.table}
-                    aria-label="simple table"
-                >
-                    <TableHead component="div">
-                        <TableRow component="div">
-                            <TableCell component="div">Title</TableCell>
-                            <TableCell component="div" align="center">
-                                작성자
-                            </TableCell>
-                            <TableCell component="div" align="center">
-                                작성일자
-                            </TableCell>
-                            <TableCell component="div" align="center">
-                                수정일자
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody component="div">
-                        {data
-                            ? data.map((item) => (
-                                  <TableRow
-                                      component={Link}
-                                      to={`/detail/${item.id}`}
-                                      key={item.id}
-                                  >
-                                      <TableCell component="div" scope="row">
-                                          {item.title}
-                                      </TableCell>
-                                      <TableCell component="div" align="center">
-                                          {item.nickname}
-                                      </TableCell>
-                                      <TableCell component="div" align="center">
-                                          {item.createdAt}
-                                      </TableCell>
-                                      <TableCell component="div" align="center">
-                                          {item.updatedAt}
-                                      </TableCell>
-                                  </TableRow>
-                              ))
-                            : null}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+        <Container style={{ marginTop: "3em" }}>
+            {data && (
+                <React.Fragment>
+                    <TableContainer component={Paper}>
+                        <Table component="div" aria-label="simple table">
+                            <TableHead component="div">
+                                <TableRow component="div">
+                                    <TableCell component="div">Title</TableCell>
+                                    <TableCell component="div" align="center">
+                                        작성자
+                                    </TableCell>
+                                    <TableCell component="div" align="center">
+                                        작성일자
+                                    </TableCell>
+                                    <TableCell component="div" align="center">
+                                        수정일자
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody component="div">
+                                {data
+                                    ? data.map((item) => (
+                                          <TableRow
+                                              component={Link}
+                                              to={`/detail/${item.id}`}
+                                              key={item.id}
+                                              style={{ textDecoration: "none" }}
+                                          >
+                                              <TableCell
+                                                  component="div"
+                                                  scope="row"
+                                              >
+                                                  {item.title}
+                                              </TableCell>
+                                              <TableCell
+                                                  component="div"
+                                                  align="center"
+                                              >
+                                                  {item.nickname}
+                                              </TableCell>
+                                              <TableCell
+                                                  component="div"
+                                                  align="center"
+                                              >
+                                                  {item.createdAt}
+                                              </TableCell>
+                                              <TableCell
+                                                  component="div"
+                                                  align="center"
+                                              >
+                                                  {item.updatedAt}
+                                              </TableCell>
+                                          </TableRow>
+                                      ))
+                                    : null}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
-            <CreateButton />
+                    <CreateButton />
+                </React.Fragment>
+            )}
         </Container>
     );
 }

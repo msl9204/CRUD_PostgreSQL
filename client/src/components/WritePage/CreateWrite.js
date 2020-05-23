@@ -4,28 +4,52 @@ import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import { FormControl } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
 
+const Styledform = styled.form`
+    display: flex;
+`;
+
 const StyledFormControl = styled(FormControl)`
-    width: 40vw;
-    height: 40vh;
-
-    margin-top: 30px;
-
-    .contents {
-        margin-top: 30px;
+    && {
+        flex: 1;
+        width: 900px;
+        margin-top: 50px;
+        flex-direction: column;
+        justify-self: center;
+        align-self: center;
     }
 
+    ${(props) =>
+        props.field &&
+        css`
+            margin-top: 30px;
+            background-color: black;
+        `}
+`;
+
+const StyledTextField = styled(TextField)`
+    && {
+        margin-top: 15px;
+        max-width: 200px;
+    }
+`;
+
+const StyledContents = styled(TextField)`
+    && {
+        margin-top: 50px;
+    }
+`;
+
+const StyledButtonGroup = styled.div`
     .button {
         margin-top: 30px;
         max-width: 100px;
     }
-`;
-
-const StyledTextField = styled(TextField)`
-    max-width: 200px;
-    margin-top: 30px;
+    .button:nth-child(2) {
+        margin-left: 20px;
+    }
 `;
 
 export default function MultilineTextFields(props) {
@@ -39,15 +63,12 @@ export default function MultilineTextFields(props) {
     // 수정하면 state에 받아옴
     useEffect(() => {
         if (props.user_id) {
-            console.log(props.user_id);
             setUserid(() => props.user_id);
             setTitle(() => props.title);
             setNickname(() => props.nickname);
             setContents(() => props.contents);
-
-            console.log(userid);
         }
-    }, [props]);
+    }, [props.user_id, props.title, props.nickname, props.contents]);
 
     function handleCreateSubmit(event) {
         Axios.post("http://118.222.73.34:5000/crud/create", {
@@ -62,6 +83,7 @@ export default function MultilineTextFields(props) {
                     history.push("/");
                 } else {
                     alert("입력에 실패했습니다.");
+                    console.log(response);
                 }
             })
             .catch((err) => console.log(err));
@@ -78,7 +100,7 @@ export default function MultilineTextFields(props) {
             .then((response) => {
                 console.log(response);
                 if (response.data.success) {
-                    history.push("/");
+                    history.go();
                 } else {
                     alert("입력에 실패했습니다.");
                 }
@@ -107,7 +129,7 @@ export default function MultilineTextFields(props) {
 
     return (
         <Container>
-            <form
+            <Styledform
                 autoComplete="off"
                 // props 에서 받은 것이 있다면 = 수정한다면, UpdateSubmit을 불러오고
                 // ListView에서 새로 작성하는 것이라면, CreateSubmit을 불러옴
@@ -122,14 +144,7 @@ export default function MultilineTextFields(props) {
                         id="user-id"
                         placeholder="아이디"
                         value={userid}
-                        onChange={(event) => {
-                            handleChange(event);
-                        }}
-                    ></StyledTextField>
-                    <StyledTextField
-                        id="title"
-                        placeholder="제목"
-                        value={title}
+                        field
                         onChange={(event) => {
                             handleChange(event);
                         }}
@@ -138,12 +153,22 @@ export default function MultilineTextFields(props) {
                         id="nickname"
                         placeholder="닉네임"
                         value={nickname}
+                        field
+                        onChange={(event) => {
+                            handleChange(event);
+                        }}
+                    ></StyledTextField>
+                    <StyledTextField
+                        id="title"
+                        placeholder="제목"
+                        value={title}
+                        field
                         onChange={(event) => {
                             handleChange(event);
                         }}
                     ></StyledTextField>
 
-                    <TextField
+                    <StyledContents
                         className="contents"
                         multiline
                         rows={30}
@@ -155,23 +180,32 @@ export default function MultilineTextFields(props) {
                             handleChange(event);
                         }}
                     />
-                    <Button
-                        className="button"
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                    >
-                        쓰기
-                    </Button>
-                    <Button
-                        className="button"
-                        variant="contained"
-                        color="primary"
-                    >
-                        취소
-                    </Button>
+                    <StyledButtonGroup>
+                        <Button
+                            className="button"
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                        >
+                            쓰기
+                        </Button>
+                        <Button
+                            className="button"
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                if (props.user_id) {
+                                    history.go();
+                                } else {
+                                    history.push("/");
+                                }
+                            }}
+                        >
+                            취소
+                        </Button>
+                    </StyledButtonGroup>
                 </StyledFormControl>
-            </form>
+            </Styledform>
         </Container>
     );
 }
