@@ -18,8 +18,13 @@ app.use(logger("dev"));
 // Route
 const route_root = require("./Router/root");
 const route_crud = require("./Router/crud");
+const route_users = require("./Router/users");
+const route_post = require("./Router/post");
+
 app.use("/", route_root);
 app.use("/crud", route_crud);
+app.use("/users", route_users);
+app.use("/post", route_post);
 
 app.listen(port, () =>
     console.log(`Example app listening at http://localhost:${port}`)
