@@ -41,7 +41,7 @@ export default function SimpleTable() {
                                 <ContentTextField>
                                     <ContentTitle>{item.title}</ContentTitle>
                                     <ContentTime>
-                                        CreateAt :
+                                        CreateAt :{" "}
                                         {DatetoRelative(item.createdAt)}
                                     </ContentTime>
                                     <ContentText>{item.contents}</ContentText>
