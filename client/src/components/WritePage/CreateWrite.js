@@ -1,56 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import TextField from "@material-ui/core/TextField";
-import Container from "@material-ui/core/Container";
-import { FormControl } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import styled, { css } from "styled-components";
+
+import BasicLayout from "../BasicView/Layout";
 import { useHistory, useParams } from "react-router-dom";
-
-const Styledform = styled.form`
-    display: flex;
-`;
-
-const StyledFormControl = styled(FormControl)`
-    && {
-        flex: 1;
-        width: 900px;
-        margin-top: 50px;
-        flex-direction: column;
-        justify-self: center;
-        align-self: center;
-    }
-
-    ${(props) =>
-        props.field &&
-        css`
-            margin-top: 30px;
-            background-color: black;
-        `}
-`;
-
-const StyledTextField = styled(TextField)`
-    && {
-        margin-top: 15px;
-        max-width: 200px;
-    }
-`;
-
-const StyledContents = styled(TextField)`
-    && {
-        margin-top: 50px;
-    }
-`;
-
-const StyledButtonGroup = styled.div`
-    .button {
-        margin-top: 30px;
-        max-width: 100px;
-    }
-    .button:nth-child(2) {
-        margin-left: 20px;
-    }
-`;
+import {
+    ContainerText,
+    ContentBoxArea,
+    Form,
+    WriteTitle,
+    WriteContent,
+    WriteButton,
+    CancelButton,
+} from "../../styles/componentStyles";
 
 export default function MultilineTextFields(props) {
     const { id } = useParams();
@@ -127,85 +88,101 @@ export default function MultilineTextFields(props) {
         }
     }
 
-    return (
-        <Container>
-            <Styledform
-                autoComplete="off"
-                // props 에서 받은 것이 있다면 = 수정한다면, UpdateSubmit을 불러오고
-                // ListView에서 새로 작성하는 것이라면, CreateSubmit을 불러옴
-                onSubmit={(event) =>
-                    props.user_id
-                        ? handleUpdateSubmit(event)
-                        : handleCreateSubmit(event)
-                }
-            >
-                <StyledFormControl>
-                    <StyledTextField
-                        id="user-id"
-                        placeholder="아이디"
-                        value={userid}
-                        field
-                        onChange={(event) => {
-                            handleChange(event);
-                        }}
-                    ></StyledTextField>
-                    <StyledTextField
-                        id="nickname"
-                        placeholder="닉네임"
-                        value={nickname}
-                        field
-                        onChange={(event) => {
-                            handleChange(event);
-                        }}
-                    ></StyledTextField>
-                    <StyledTextField
-                        id="title"
-                        placeholder="제목"
-                        value={title}
-                        field
-                        onChange={(event) => {
-                            handleChange(event);
-                        }}
-                    ></StyledTextField>
-
-                    <StyledContents
-                        className="contents"
-                        multiline
-                        rows={30}
-                        placeholder="Contents"
-                        variant="outlined"
-                        fullWidth
-                        value={contents}
-                        onChange={(event) => {
-                            handleChange(event);
-                        }}
-                    />
-                    <StyledButtonGroup>
-                        <Button
-                            className="button"
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                        >
-                            쓰기
-                        </Button>
-                        <Button
-                            className="button"
-                            variant="contained"
-                            color="primary"
-                            onClick={() => {
-                                if (props.user_id) {
-                                    history.go();
-                                } else {
-                                    history.push("/");
-                                }
-                            }}
-                        >
-                            취소
-                        </Button>
-                    </StyledButtonGroup>
-                </StyledFormControl>
-            </Styledform>
-        </Container>
+    return BasicLayout(
+        <React.Fragment>
+            <ContainerText>Write</ContainerText>
+            <ContentBoxArea>
+                <Form>
+                    <WriteTitle type="text" placeholder="제목" />
+                    <WriteContent type="text" placeholder="내용" />
+                    <div>
+                        <WriteButton>Write</WriteButton>
+                        <CancelButton>Cancel</CancelButton>
+                    </div>
+                </Form>
+            </ContentBoxArea>
+        </React.Fragment>
     );
+
+    // return (
+    //     <Container>
+    //         <Styledform
+    //             autoComplete="off"
+    //             // props 에서 받은 것이 있다면 = 수정한다면, UpdateSubmit을 불러오고
+    //             // ListView에서 새로 작성하는 것이라면, CreateSubmit을 불러옴
+    //             onSubmit={(event) =>
+    //                 props.user_id
+    //                     ? handleUpdateSubmit(event)
+    //                     : handleCreateSubmit(event)
+    //             }
+    //         >
+    //             <StyledFormControl>
+    //                 <StyledTextField
+    //                     id="user-id"
+    //                     placeholder="아이디"
+    //                     value={userid}
+    //                     field
+    //                     onChange={(event) => {
+    //                         handleChange(event);
+    //                     }}
+    //                 ></StyledTextField>
+    //                 <StyledTextField
+    //                     id="nickname"
+    //                     placeholder="닉네임"
+    //                     value={nickname}
+    //                     field
+    //                     onChange={(event) => {
+    //                         handleChange(event);
+    //                     }}
+    //                 ></StyledTextField>
+    //                 <StyledTextField
+    //                     id="title"
+    //                     placeholder="제목"
+    //                     value={title}
+    //                     field
+    //                     onChange={(event) => {
+    //                         handleChange(event);
+    //                     }}
+    //                 ></StyledTextField>
+
+    //                 <StyledContents
+    //                     className="contents"
+    //                     multiline
+    //                     rows={30}
+    //                     placeholder="Contents"
+    //                     variant="outlined"
+    //                     fullWidth
+    //                     value={contents}
+    //                     onChange={(event) => {
+    //                         handleChange(event);
+    //                     }}
+    //                 />
+    //                 <StyledButtonGroup>
+    //                     <Button
+    //                         className="button"
+    //                         variant="contained"
+    //                         color="primary"
+    //                         type="submit"
+    //                     >
+    //                         쓰기
+    //                     </Button>
+    //                     <Button
+    //                         className="button"
+    //                         variant="contained"
+    //                         color="primary"
+    //                         onClick={() => {
+    //                             if (props.user_id) {
+    //                                 history.go();
+    //                             } else {
+    //                                 history.push("/");
+    //                             }
+    //                         }}
+    //                     >
+    //                         취소
+    //                     </Button>
+    //                 </StyledButtonGroup>
+    //             </StyledFormControl>
+    //         </Styledform>
+    //     </Container>
+    // );
 }
