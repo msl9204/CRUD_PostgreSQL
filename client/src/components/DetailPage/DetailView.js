@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import BasicLayout from "../BasicView/Layout";
-import Card from "@material-ui/core/Card";
 import Axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import WritePage from "../WritePage/CreateWrite";
 
-import { ContainerText } from "../../styles/componentStyles";
+import {
+    ContainerText,
+    ContentBoxArea,
+    DetailContent,
+    BackButton,
+    DeleteButton,
+    ButtonZone,
+} from "../../styles/componentStyles";
 
 export default function SimpleContainer() {
     const { id } = useParams();
     const history = useHistory();
-    const [data, setdata] = useState("");
+    const [data, setData] = useState("");
     const [isEdit, setIsEdit] = useState(false);
+
+    function backAction() {
+        history.push("/");
+    }
 
     function DeletePost(event) {
         Axios.post(`http://118.222.73.34:5000/crud/delete/${id}`, {
@@ -34,15 +43,25 @@ export default function SimpleContainer() {
     useEffect(() => {
         Axios.get(`http://118.222.73.34:5000/crud/detailView/${id}`).then(
             (response) => {
-                setdata(response.data);
+                setData(response.data);
             }
         );
     }, [id]);
 
     return BasicLayout(
-        <React.Fragment>
-            <ContainerText>Contents-Title</ContainerText>
-        </React.Fragment>
+        data &&
+            data.map((item) => (
+                <React.Fragment>
+                    <ContainerText>{item.title}</ContainerText>
+                    <ContentBoxArea>
+                        <DetailContent>{item.contents}</DetailContent>
+                    </ContentBoxArea>
+                    <ButtonZone>
+                        <DeleteButton onClick={DeletePost}>Delete</DeleteButton>
+                        <BackButton onClick={backAction}>Back</BackButton>
+                    </ButtonZone>
+                </React.Fragment>
+            ))
     );
 
     // function RenderContents() {

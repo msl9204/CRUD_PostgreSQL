@@ -35,10 +35,8 @@ const MainContainer = styled.div`
 // LayoutEnd
 
 // Page 이름
-const ContainerText = styled.h1`
-    width: 123px;
-    height: 42px;
 
+const ContainerText = styled.h1`
     font-size: 36px;
     line-height: 42px;
 
@@ -103,6 +101,24 @@ const ContentText = styled.h6`
     line-height: 1.2em;
 `;
 
+const CreateButton = styled.button`
+    margin: 20px 10px 0 0;
+    width: 150px;
+    height: 60px;
+
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25);
+
+    background: #00a8ff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    font-size: 1rem;
+    &:hover {
+        background: #82ccdd;
+        transition-duration: 0.5s;
+        cursor: pointer;
+    }
+`;
+
 // CreateWrite.js
 const Form = styled.form`
     display: flex;
@@ -163,6 +179,24 @@ const CancelButton = styled(WriteButton)`
         background: #ff7979;
     }
 `;
+// WritePage end
+
+//DetailPage start
+
+const DetailContent = styled(ContentBox)`
+    width: 50vw;
+    height: 70vh;
+`;
+
+const ButtonZone = styled.div`
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+`;
+
+const BackButton = styled(CreateButton)``;
+
+const DeleteButton = styled(CancelButton)``;
 
 export {
     Container,
@@ -180,4 +214,9 @@ export {
     WriteContent,
     WriteButton,
     CancelButton,
+    CreateButton,
+    DetailContent,
+    BackButton,
+    DeleteButton,
+    ButtonZone,
 };

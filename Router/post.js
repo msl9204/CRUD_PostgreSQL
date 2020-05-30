@@ -4,7 +4,7 @@ const router = express.Router();
 
 const useDB = models.blog_content;
 
-router.post("/create", (req, res) => {
+router.post("/testcreate", (req, res) => {
     const body = req.body;
 
     console.log(req.body);

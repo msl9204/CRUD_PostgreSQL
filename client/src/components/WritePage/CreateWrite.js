@@ -33,9 +33,7 @@ export default function MultilineTextFields(props) {
 
     function handleCreateSubmit(event) {
         Axios.post("http://118.222.73.34:5000/crud/create", {
-            user_id: userid,
             title: title,
-            nickname: nickname,
             contents: contents,
         })
             .then((response) => {
@@ -92,11 +90,25 @@ export default function MultilineTextFields(props) {
         <React.Fragment>
             <ContainerText>Write</ContainerText>
             <ContentBoxArea>
-                <Form>
-                    <WriteTitle type="text" placeholder="제목" />
-                    <WriteContent type="text" placeholder="내용" />
+                <Form onSubmit={handleCreateSubmit}>
+                    <WriteTitle
+                        type="text"
+                        placeholder="제목"
+                        value={title}
+                        onChange={(event) => {
+                            setTitle(event.target.value);
+                        }}
+                    />
+                    <WriteContent
+                        type="text"
+                        placeholder="내용"
+                        value={contents}
+                        onChange={(event) => {
+                            setContents(event.target.value);
+                        }}
+                    />
                     <div>
-                        <WriteButton>Write</WriteButton>
+                        <WriteButton type="submit">Write</WriteButton>
                         <CancelButton>Cancel</CancelButton>
                     </div>
                 </Form>

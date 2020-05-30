@@ -2,7 +2,7 @@ const express = require("express");
 const models = require("../models/");
 const router = express.Router();
 
-const useDB = models.contents_table;
+const useDB = models.blog_content;
 
 router.get("/select", (req, res) => {
     useDB.findAll().then((result) => {
@@ -30,10 +30,8 @@ router.post("/create", (req, res) => {
 
     useDB
         .create({
-            user_id: body.user_id,
-            nickname: body.nickname,
-            contents: body.contents,
             title: body.title,
+            contents: body.contents,
         })
         .then(() => {
             res.send({ success: true });

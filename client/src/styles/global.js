@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { Link } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -62,6 +63,12 @@ input, textarea {
 button {
 	border:none;
 	outline:none;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+
 }
 
 
