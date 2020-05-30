@@ -9,37 +9,18 @@ import {
     Form,
     WriteTitle,
     WriteContent,
+    ButtonZone,
     WriteButton,
     CancelButton,
 } from "../../styles/componentStyles";
 
-export default function MultilineTextFields(props) {
+export default function WritePage(props) {
     const { id } = useParams();
     const history = useHistory();
-    const [userid, setUserid] = useState("");
     const [title, setTitle] = useState("");
-    const [nickname, setNickname] = useState("");
     const [contents, setContents] = useState("");
 
-    function backAction() {
-        history.push("/");
-    }
-
-    // 수정하면 state에 받아옴
-    useEffect(() => {
-        if (props.user_id) {
-            setUserid(() => props.user_id);
-            setTitle(() => props.title);
-            setNickname(() => props.nickname);
-            setContents(() => props.contents);
-        }
-    }, [props.user_id, props.title, props.nickname, props.contents]);
-
     function handleCreateSubmit(event) {
-        if (!title) {
-            alert("제목은 반드시 입력해주세요");
-        }
-
         Axios.post("http://118.222.73.34:5000/crud/create", {
             title: title,
             contents: contents,
@@ -59,9 +40,7 @@ export default function MultilineTextFields(props) {
 
     function handleUpdateSubmit(event) {
         Axios.post(`http://118.222.73.34:5000/crud/update/${id}`, {
-            user_id: userid,
             title: title,
-            nickname: nickname,
             contents: contents,
         })
             .then((response) => {
@@ -76,29 +55,26 @@ export default function MultilineTextFields(props) {
         event.preventDefault();
     }
 
-    function handleChange(event) {
-        if (event.target.id === "user-id") {
-            setUserid(event.target.value);
-        }
-
-        if (event.target.id === "title") {
-            setTitle(event.target.value);
-        }
-
-        if (event.target.id === "nickname") {
-            setNickname(event.target.value);
-        }
-
-        if (event.target.tagName === "TEXTAREA") {
-            setContents(event.target.value);
-        }
+    function backAction() {
+        history.push("/");
     }
+
+    useEffect(() => {
+        setTitle(() => props.title);
+        setContents(() => props.contents);
+    }, [props.title, props.contents]);
 
     return BasicLayout(
         <React.Fragment>
             <ContainerText>Write</ContainerText>
             <ContentBoxArea single>
-                <Form onSubmit={handleCreateSubmit}>
+                <Form
+                    onSubmit={(event) =>
+                        props.isEdit
+                            ? handleUpdateSubmit(event)
+                            : handleCreateSubmit(event)
+                    }
+                >
                     <WriteTitle
                         type="text"
                         placeholder="제목"
@@ -116,16 +92,38 @@ export default function MultilineTextFields(props) {
                             setContents(event.target.value);
                         }}
                     />
-                    <div>
+                    <ButtonZone>
                         <WriteButton type="submit">Write</WriteButton>
                         <CancelButton type="button" onClick={backAction}>
                             Cancel
                         </CancelButton>
-                    </div>
+                    </ButtonZone>
                 </Form>
             </ContentBoxArea>
         </React.Fragment>
     );
+
+    // 수정하면 state에 받아옴
+
+    // function handleChange(event) {
+    //     if (event.target.id === "user-id") {
+    //         setUserid(event.target.value);
+    //     }
+
+    //     if (event.target.id === "title") {
+    //         setTitle(event.target.value);
+    //     }
+
+    //     if (event.target.id === "nickname") {
+    //         setNickname(event.target.value);
+    //     }
+
+    //     if (event.target.tagName === "TEXTAREA") {
+    //         setContents(event.target.value);
+    //     }
+    // }
+
+    return;
 
     // return (
     //     <Container>

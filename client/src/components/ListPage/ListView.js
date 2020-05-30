@@ -35,7 +35,7 @@ export default function SimpleTable() {
                 <ContainerText>Articles</ContainerText>
                 <ContentBoxArea>
                     {data.map((item) => (
-                        <Link to={`/detail/${item.id}`}>
+                        <Link to={`/detail/${item.id}`} key={item.id}>
                             <ContentBox>
                                 <ContentImg />
                                 <ContentTextField>

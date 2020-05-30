@@ -48,10 +48,8 @@ router.post("/update/:id", (req, res) => {
     useDB
         .update(
             {
-                user_id: body.user_id,
-                nickname: body.nickname,
-                contents: body.contents,
                 title: body.title,
+                contents: body.contents,
             },
             { where: { id: id } }
         )

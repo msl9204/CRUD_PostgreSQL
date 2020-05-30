@@ -49,79 +49,43 @@ export default function SimpleContainer() {
         );
     }, [id]);
 
-    return BasicLayout(
-        data &&
-            data.map((item) => (
-                <React.Fragment>
-                    <ContainerText>{item.title}</ContainerText>
-                    <ContentBoxArea single>
-                        <DetailContent>{item.contents}</DetailContent>
-                    </ContentBoxArea>
-                    <ButtonZone>
-                        <BackButton onClick={backAction}>Back</BackButton>
-                        <EditButton>Edit</EditButton>
-                        <DeleteButton onClick={DeletePost}>Delete</DeleteButton>
-                    </ButtonZone>
-                </React.Fragment>
-            ))
-    );
-
-    // function RenderContents() {
-    //     return (
-    //         <StyledContainer>
-    //             <StyledContents>
-    //                 <div>
-    //                     <div className="content-nickname">
-    //                         작성자 : {data[0].nickname}
-    //                     </div>
-    //                     <div className="content-title">{data[0].title}</div>
-    //                 </div>
-    //                 <StyledCardContents>{data[0].contents}</StyledCardContents>
-    //                 <div>
-    //                     <Button
-    //                         variant="contained"
-    //                         color="primary"
-    //                         onClick={() => {
-    //                             setIsEdit(true);
-    //                         }}
-    //                     >
-    //                         수정
-    //                     </Button>
-    //                     <Button
-    //                         variant="contained"
-    //                         color="primary"
-    //                         onClick={(event) => {
-    //                             DeletePost(event);
-    //                         }}
-    //                     >
-    //                         삭제
-    //                     </Button>
-    //                 </div>
-    //             </StyledContents>
-    //         </StyledContainer>
-    //     );
-    // }
-
-    // return (
-    //     <React.Fragment>
-    //         <div>
-    //             {/* 수정버튼을 누르면 수정Form을 랜더링하고, 아니라면 Contents를 보여줌 */}
-    //             {data[0] ? (
-    //                 isEdit ? (
-    //                     <div>
-    //                         <WritePage
-    //                             id={data[0].id}
-    //                             user_id={data[0].user_id}
-    //                             nickname={data[0].nickname}
-    //                             title={data[0].title}
-    //                             contents={data[0].contents}
-    //                         />
-    //                     </div>
-    //                 ) : (
-    //                     <RenderContents />
-    //                 )
-    //             ) : null}
-    //         </div>
-    //     </React.Fragment>
-    // );
+    if (!isEdit) {
+        return BasicLayout(
+            data &&
+                data.map((item) => (
+                    <React.Fragment>
+                        <ContainerText>{item.title}</ContainerText>
+                        <ContentBoxArea single>
+                            <DetailContent>{item.contents}</DetailContent>
+                        </ContentBoxArea>
+                        <ButtonZone>
+                            <BackButton onClick={backAction}>Back</BackButton>
+                            <EditButton
+                                onClick={() => {
+                                    setIsEdit(true);
+                                }}
+                            >
+                                Edit
+                            </EditButton>
+                            <DeleteButton onClick={DeletePost}>
+                                Delete
+                            </DeleteButton>
+                        </ButtonZone>
+                    </React.Fragment>
+                ))
+        );
+    } else {
+        return (
+            <div>
+                {data &&
+                    data.map((item) => (
+                        <WritePage
+                            title={item.title}
+                            contents={item.contents}
+                            isEdit={true}
+                        />
+                    ))}
+            </div>
+        );
+    }
 }
