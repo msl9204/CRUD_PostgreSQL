@@ -1,11 +1,5 @@
 import React from "react";
-import {
-    Container,
-    Header,
-    MainContainer,
-    ContainerText,
-    ContentBoxArea,
-} from "../../styles/componentStyles";
+import { Container, Header, MainContainer } from "../../styles/componentStyles";
 
 // 전체 컨테이너
 

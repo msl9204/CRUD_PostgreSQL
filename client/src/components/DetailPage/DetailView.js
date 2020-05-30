@@ -11,6 +11,7 @@ import {
     BackButton,
     DeleteButton,
     ButtonZone,
+    EditButton,
 } from "../../styles/componentStyles";
 
 export default function SimpleContainer() {
@@ -53,12 +54,13 @@ export default function SimpleContainer() {
             data.map((item) => (
                 <React.Fragment>
                     <ContainerText>{item.title}</ContainerText>
-                    <ContentBoxArea>
+                    <ContentBoxArea single>
                         <DetailContent>{item.contents}</DetailContent>
                     </ContentBoxArea>
                     <ButtonZone>
-                        <DeleteButton onClick={DeletePost}>Delete</DeleteButton>
                         <BackButton onClick={backAction}>Back</BackButton>
+                        <EditButton>Edit</EditButton>
+                        <DeleteButton onClick={DeletePost}>Delete</DeleteButton>
                     </ButtonZone>
                 </React.Fragment>
             ))

@@ -21,6 +21,10 @@ export default function MultilineTextFields(props) {
     const [nickname, setNickname] = useState("");
     const [contents, setContents] = useState("");
 
+    function backAction() {
+        history.push("/");
+    }
+
     // 수정하면 state에 받아옴
     useEffect(() => {
         if (props.user_id) {
@@ -32,6 +36,10 @@ export default function MultilineTextFields(props) {
     }, [props.user_id, props.title, props.nickname, props.contents]);
 
     function handleCreateSubmit(event) {
+        if (!title) {
+            alert("제목은 반드시 입력해주세요");
+        }
+
         Axios.post("http://118.222.73.34:5000/crud/create", {
             title: title,
             contents: contents,
@@ -89,11 +97,12 @@ export default function MultilineTextFields(props) {
     return BasicLayout(
         <React.Fragment>
             <ContainerText>Write</ContainerText>
-            <ContentBoxArea>
+            <ContentBoxArea single>
                 <Form onSubmit={handleCreateSubmit}>
                     <WriteTitle
                         type="text"
                         placeholder="제목"
+                        required
                         value={title}
                         onChange={(event) => {
                             setTitle(event.target.value);
@@ -109,7 +118,9 @@ export default function MultilineTextFields(props) {
                     />
                     <div>
                         <WriteButton type="submit">Write</WriteButton>
-                        <CancelButton>Cancel</CancelButton>
+                        <CancelButton type="button" onClick={backAction}>
+                            Cancel
+                        </CancelButton>
                     </div>
                 </Form>
             </ContentBoxArea>

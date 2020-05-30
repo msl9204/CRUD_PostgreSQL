@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { Link } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
 

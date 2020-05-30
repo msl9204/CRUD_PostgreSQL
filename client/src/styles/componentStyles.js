@@ -50,7 +50,8 @@ const ContentBoxArea = styled.div`
     flex-wrap: wrap;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
+    justify-content: ${(props) => props.single && "center"};
     width: 1440px;
     height: auto;
 `;
@@ -86,16 +87,27 @@ const ContentTextField = styled.div`
 const ContentTitle = styled.h3`
     font-size: 1.5rem;
     margin-top: 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 라인수 */
+    -webkit-box-orient: vertical;
 
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 `;
 
+const ContentTime = styled.div`
+    margin-top: 5px;
+
+    display: block;
+    background-color: #c7ecee;
+`;
+
 const ContentText = styled.h6`
-    margin-top: 30px;
+    margin-top: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 9; /* 라인수 */
+    -webkit-line-clamp: 7; /* 라인수 */
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     line-height: 1.2em;
@@ -186,9 +198,14 @@ const CancelButton = styled(WriteButton)`
 const DetailContent = styled(ContentBox)`
     width: 50vw;
     height: 70vh;
+    word-wrap: break-word;
 `;
 
 const ButtonZone = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    flex-wrap: wrap;
     position: fixed;
     bottom: 10%;
     right: 5%;
@@ -197,6 +214,10 @@ const ButtonZone = styled.div`
 const BackButton = styled(CreateButton)``;
 
 const DeleteButton = styled(CancelButton)``;
+
+const EditButton = styled(CreateButton)`
+    background-color: #6ab04c;
+`;
 
 export {
     Container,
@@ -219,4 +240,6 @@ export {
     BackButton,
     DeleteButton,
     ButtonZone,
+    ContentTime,
+    EditButton,
 };
