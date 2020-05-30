@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Axios from "axios";
 
 import BasicLayout from "../BasicView/Layout";
@@ -12,6 +12,10 @@ import {
     ButtonZone,
     WriteButton,
     CancelButton,
+    AddImage,
+    HideInputFile,
+    UploadContainer,
+    ImageName,
 } from "../../styles/componentStyles";
 
 export default function WritePage(props) {
@@ -19,11 +23,17 @@ export default function WritePage(props) {
     const history = useHistory();
     const [title, setTitle] = useState("");
     const [contents, setContents] = useState("");
+    const [imageData, setImageData] = useState("");
+    const [imageName, setImageName] = useState("");
+    const [imageSize, setImageSize] = useState("");
+
+    console.log(imageData);
 
     function handleCreateSubmit(event) {
         Axios.post("http://118.222.73.34:5000/crud/create", {
             title: title,
             contents: contents,
+            img: imageData,
         })
             .then((response) => {
                 console.log(response);
@@ -98,112 +108,39 @@ export default function WritePage(props) {
                             Cancel
                         </CancelButton>
                     </ButtonZone>
+                    <UploadContainer>
+                        <AddImage htmlFor="add_file">Add Image</AddImage>
+                        {imageName && (
+                            <ImageName>
+                                {imageName} ({imageSize}){" MB"}
+                            </ImageName>
+                        )}
+                        <HideInputFile
+                            id="add_file"
+                            type="file"
+                            accept="image/*"
+                            onChange={(event) => {
+                                let Reader = new FileReader();
+                                Reader.readAsBinaryString(
+                                    event.target.files[0]
+                                );
+
+                                Reader.onload = function (e) {
+                                    setImageData(e.target.result);
+                                };
+
+                                setImageName(event.target.files[0].name);
+                                setImageSize(
+                                    (
+                                        event.target.files[0].size /
+                                        (1024 * 1024)
+                                    ).toFixed(2)
+                                );
+                            }}
+                        />
+                    </UploadContainer>
                 </Form>
             </ContentBoxArea>
         </React.Fragment>
     );
-
-    // 수정하면 state에 받아옴
-
-    // function handleChange(event) {
-    //     if (event.target.id === "user-id") {
-    //         setUserid(event.target.value);
-    //     }
-
-    //     if (event.target.id === "title") {
-    //         setTitle(event.target.value);
-    //     }
-
-    //     if (event.target.id === "nickname") {
-    //         setNickname(event.target.value);
-    //     }
-
-    //     if (event.target.tagName === "TEXTAREA") {
-    //         setContents(event.target.value);
-    //     }
-    // }
-
-    return;
-
-    // return (
-    //     <Container>
-    //         <Styledform
-    //             autoComplete="off"
-    //             // props 에서 받은 것이 있다면 = 수정한다면, UpdateSubmit을 불러오고
-    //             // ListView에서 새로 작성하는 것이라면, CreateSubmit을 불러옴
-    //             onSubmit={(event) =>
-    //                 props.user_id
-    //                     ? handleUpdateSubmit(event)
-    //                     : handleCreateSubmit(event)
-    //             }
-    //         >
-    //             <StyledFormControl>
-    //                 <StyledTextField
-    //                     id="user-id"
-    //                     placeholder="아이디"
-    //                     value={userid}
-    //                     field
-    //                     onChange={(event) => {
-    //                         handleChange(event);
-    //                     }}
-    //                 ></StyledTextField>
-    //                 <StyledTextField
-    //                     id="nickname"
-    //                     placeholder="닉네임"
-    //                     value={nickname}
-    //                     field
-    //                     onChange={(event) => {
-    //                         handleChange(event);
-    //                     }}
-    //                 ></StyledTextField>
-    //                 <StyledTextField
-    //                     id="title"
-    //                     placeholder="제목"
-    //                     value={title}
-    //                     field
-    //                     onChange={(event) => {
-    //                         handleChange(event);
-    //                     }}
-    //                 ></StyledTextField>
-
-    //                 <StyledContents
-    //                     className="contents"
-    //                     multiline
-    //                     rows={30}
-    //                     placeholder="Contents"
-    //                     variant="outlined"
-    //                     fullWidth
-    //                     value={contents}
-    //                     onChange={(event) => {
-    //                         handleChange(event);
-    //                     }}
-    //                 />
-    //                 <StyledButtonGroup>
-    //                     <Button
-    //                         className="button"
-    //                         variant="contained"
-    //                         color="primary"
-    //                         type="submit"
-    //                     >
-    //                         쓰기
-    //                     </Button>
-    //                     <Button
-    //                         className="button"
-    //                         variant="contained"
-    //                         color="primary"
-    //                         onClick={() => {
-    //                             if (props.user_id) {
-    //                                 history.go();
-    //                             } else {
-    //                                 history.push("/");
-    //                             }
-    //                         }}
-    //                     >
-    //                         취소
-    //                     </Button>
-    //                 </StyledButtonGroup>
-    //             </StyledFormControl>
-    //         </Styledform>
-    //     </Container>
-    // );
 }

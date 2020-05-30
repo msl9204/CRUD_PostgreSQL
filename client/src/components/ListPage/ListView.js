@@ -15,7 +15,6 @@ import {
     ButtonZone,
     ContentTime,
 } from "../../styles/componentStyles";
-import CreateWrite from "../WritePage/CreateWrite";
 
 export default function SimpleTable() {
     const [data, setData] = useState("");
@@ -37,7 +36,13 @@ export default function SimpleTable() {
                     {data.map((item) => (
                         <Link to={`/detail/${item.id}`} key={item.id}>
                             <ContentBox>
-                                <ContentImg />
+                                {console.log(item.img)}
+
+                                <ContentImg
+                                    style={{
+                                        background: `url(data:image/png;base64,${item.img})`,
+                                    }}
+                                />
                                 <ContentTextField>
                                     <ContentTitle>{item.title}</ContentTitle>
                                     <ContentTime>

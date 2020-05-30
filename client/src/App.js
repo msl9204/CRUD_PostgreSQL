@@ -3,7 +3,6 @@ import ListView from "./components/ListPage/ListView";
 import DetailView from "./components/DetailPage/DetailView";
 import CreateWrite from "./components/WritePage/CreateWrite";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import BasicLayout from "./components/BasicView/Layout";
 import GlobalStyle from "./styles/global";
 
 function App() {

@@ -53,7 +53,7 @@ export default function SimpleContainer() {
         return BasicLayout(
             data &&
                 data.map((item) => (
-                    <React.Fragment>
+                    <React.Fragment key={item.id}>
                         <ContainerText>{item.title}</ContainerText>
                         <ContentBoxArea single>
                             <DetailContent>{item.contents}</DetailContent>

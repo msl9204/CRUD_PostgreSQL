@@ -32,6 +32,7 @@ router.post("/create", (req, res) => {
         .create({
             title: body.title,
             contents: body.contents,
+            img: body.img,
         })
         .then(() => {
             res.send({ success: true });

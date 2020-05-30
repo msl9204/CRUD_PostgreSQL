@@ -76,7 +76,6 @@ const ContentImg = styled.div`
     width: 100%;
     height: 40%;
 
-    background: #eb4d4b;
     border-radius: 10px;
 `;
 
@@ -192,7 +191,37 @@ const CancelButton = styled(WriteButton)`
         background: #ff7979;
     }
 `;
-// WritePage end
+
+const UploadContainer = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const HideInputFile = styled.input`
+    display: none;
+`;
+
+const AddImage = styled.label`
+    padding-top: 10px;
+    margin-right: 10px;
+    line-height: normal;
+    width: 100px;
+    height: 40px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    margin-top: 10px;
+    background: #c4c4c4;
+    border-radius: 30px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+`;
+
+const ImageName = styled.div`
+    background: lightgrey;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+`;
 
 //DetailPage start
 
@@ -243,4 +272,8 @@ export {
     ButtonZone,
     ContentTime,
     EditButton,
+    HideInputFile,
+    AddImage,
+    UploadContainer,
+    ImageName,
 };

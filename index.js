@@ -9,8 +9,8 @@ app.use(cors());
 const port = 5000;
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }));
 
 // Log requests to the console.
 app.use(logger("dev"));
