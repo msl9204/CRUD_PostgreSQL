@@ -121,9 +121,7 @@ export default function WritePage(props) {
                             accept="image/*"
                             onChange={(event) => {
                                 let Reader = new FileReader();
-                                Reader.readAsBinaryString(
-                                    event.target.files[0]
-                                );
+                                Reader.readAsDataURL(event.target.files[0]);
 
                                 Reader.onload = function (e) {
                                     setImageData(e.target.result);

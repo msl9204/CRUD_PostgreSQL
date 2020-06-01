@@ -77,6 +77,11 @@ const ContentImg = styled.div`
     height: 40%;
 
     border-radius: 10px;
+
+    background-image: url(${(props) => props.path});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 `;
 
 const ContentTextField = styled.div`

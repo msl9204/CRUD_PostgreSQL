@@ -28,6 +28,14 @@ export default function SimpleTable() {
     function DatetoRelative(date) {
         return moment(date).calendar();
     }
+
+    function Decode(blob) {
+        if (blob) {
+            var buf = new Buffer(blob, "base64");
+            return buf;
+        }
+    }
+
     if (data) {
         return BasicLayout(
             <React.Fragment>
@@ -36,13 +44,10 @@ export default function SimpleTable() {
                     {data.map((item) => (
                         <Link to={`/detail/${item.id}`} key={item.id}>
                             <ContentBox>
-                                {console.log(item.img)}
+                                <React.Fragment>
+                                    <ContentImg path={Decode(item.img)} />
+                                </React.Fragment>
 
-                                <ContentImg
-                                    style={{
-                                        background: `url(data:image/png;base64,${item.img})`,
-                                    }}
-                                />
                                 <ContentTextField>
                                     <ContentTitle>{item.title}</ContentTitle>
                                     <ContentTime>
