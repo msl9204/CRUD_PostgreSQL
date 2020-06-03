@@ -1,7 +1,5 @@
-Blog_Projct
+Project Stack
 ======
-
-### Project Stack
 
 ### Client
 Following items are core frontend technologies used in this project:
