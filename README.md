@@ -1,5 +1,16 @@
-# CRUD_PostgreSQL
-express + PostgreSQL + ReactJS
+Project Stack
+======
 
-##
-yarn dev => concurruntly express:5000 & react:3000 
+### Client
+Following items are core frontend technologies used in this project:
+* React
+* React Router v4
+* Styled-components
+* Sass
+
+
+### Server
+Following items are core frontend technologies used in this project:
+* Node.js
+* Sequelize
+* PostgreSql
