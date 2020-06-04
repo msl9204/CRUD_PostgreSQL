@@ -10,14 +10,36 @@ const Container = styled.div`
 
 // Header
 const Header = styled.div`
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 100px;
     left: 0px;
     top: 0px;
-
+    padding: 0 50px 0 50px;
     background: #ffffff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
+`;
+
+const HeaderText = styled.div`
+    /* background: red; */
+    flex-grow: 6;
+    height: 50%;
+    font-size: 2rem;
+    padding-left: 70px;
+`;
+
+const HeaderSearch = styled.div`
+    /* background: pink; */
+    flex-grow: 1;
+    height: 50%;
+`;
+
+const HeaderCategory = styled.div`
+    /* background: blue; */
+    flex-grow: 1;
+    height: 50%;
 `;
 
 // Page이름 포함하는 컨테이너
@@ -197,6 +219,8 @@ const CancelButton = styled(WriteButton)`
     }
 `;
 
+const LogOutButton = styled(CancelButton)``;
+
 const UploadContainer = styled.div`
     display: flex;
     align-items: center;
@@ -254,6 +278,8 @@ const EditButton = styled(CreateButton)`
     background-color: #6ab04c;
 `;
 
+const LoginButton = styled(EditButton)``;
+
 export {
     Container,
     Header,
@@ -281,4 +307,9 @@ export {
     AddImage,
     UploadContainer,
     ImageName,
+    HeaderText,
+    HeaderSearch,
+    HeaderCategory,
+    LogOutButton,
+    LoginButton,
 };

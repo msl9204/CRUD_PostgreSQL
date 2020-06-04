@@ -14,10 +14,16 @@ import {
     CreateButton,
     ButtonZone,
     ContentTime,
+    LogOutButton,
+    LoginButton,
 } from "../../styles/componentStyles";
+import { useAuth } from "../../auth/useAuth";
 
 export default function SimpleTable() {
     const [data, setData] = useState("");
+    const auth = useAuth();
+
+    auth.currentUser();
 
     useEffect(() => {
         Axios.get("http://118.222.73.34:5000/crud/select").then((response) => {
@@ -62,9 +68,26 @@ export default function SimpleTable() {
                 </ContentBoxArea>
 
                 <ButtonZone>
-                    <Link to={"/write"}>
-                        <CreateButton>CREATE</CreateButton>
-                    </Link>
+                    {auth.user ? (
+                        <React.Fragment>
+                            <LogOutButton
+                                onClick={() => {
+                                    auth.signout().then((response) =>
+                                        console.log(response)
+                                    );
+                                }}
+                            >
+                                Logout
+                            </LogOutButton>
+                            <Link to={"/write"}>
+                                <CreateButton>CREATE</CreateButton>
+                            </Link>
+                        </React.Fragment>
+                    ) : (
+                        <Link to={"/login"}>
+                            <LoginButton>Login</LoginButton>
+                        </Link>
+                    )}
                 </ButtonZone>
             </React.Fragment>
         );
